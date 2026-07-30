@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: app-config
+  namespace: devops-platform
+
+data:
+  APP_NAME: "Cloud Native DevOps Platform"
+  ENVIRONMENT: "Development"
