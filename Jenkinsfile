@@ -25,6 +25,11 @@ pipeline {
                 bat 'pip install -r app\\requirements.txt'
             }
         }
+        stage('Run Tests') {
+             steps {
+                bat 'pytest tests'
+            }
+        }
     }
 
     post {
