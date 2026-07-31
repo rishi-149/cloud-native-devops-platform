@@ -25,9 +25,16 @@ pipeline {
                 bat 'pip install -r app\\requirements.txt'
             }
         }
+
         stage('Run Tests') {
-             steps {
+            steps {
                 bat 'pytest tests'
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                bat 'docker build -t cloud-native-devops:latest app'
             }
         }
     }
