@@ -1,0 +1,9 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: "cloud-native-devops"
+
+    static_configs:
+      - targets:
+          - cloud-native-devops-service.devops-platform.svc.cluster.local:80

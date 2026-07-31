@@ -30,3 +30,10 @@ def version():
 @app.get("/metrics")
 def metrics():
     return PlainTextResponse(generate_latest().decode("utf-8"))
+
+@app.get("/cpu")
+def cpu_stress():
+    total = 0
+    for i in range(50_000_000):
+        total += i * i
+    return {"message": "CPU stress completed", "result": total}

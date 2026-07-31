@@ -20,15 +20,35 @@ spec:
     spec:
       containers:
         - name: cloud-native-devops
-          image: cloud-native-devops:v3
+          image: cloud-native-devops:v4
           imagePullPolicy: Never
+
+          ports:
+            - containerPort: 8000
 
           envFrom:
             - configMapRef:
                 name: app-config
+            - secretRef:
+                name: app-secret
 
-          ports:
-            - containerPort: 8000
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
 
           resources:
             requests:
@@ -37,3 +57,12 @@ spec:
             limits:
               cpu: "500m"
               memory: "512Mi"
+
+          volumeMounts:
+            - name: app-storage
+              mountPath: /data
+
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: app-storage
